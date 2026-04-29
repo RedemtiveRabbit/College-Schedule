@@ -109,13 +109,13 @@ select option { background: #fff; }
 <script type="text/babel">
 const { useState, useEffect } = React;
 
-const CATEGORIES = [‘Philosophy’, ‘Game Development’, ‘Gen Ed’];
-const CAT_COLORS = { ‘Philosophy’: ‘#a78bfa’, ‘Game Development’: ‘#4ade80’, ‘Gen Ed’: ‘#38bdf8’ };
-const CAT_BG = { ‘Philosophy’: ‘#a78bfa18’, ‘Game Development’: ‘#4ade8018’, ‘Gen Ed’: ‘#38bdf818’ };
-const SEMESTERS = [‘Fall Year 1’,‘Spring Year 1’,‘Fall Year 2’,‘Spring Year 2’,‘Fall Year 3’,‘Spring Year 3’,‘Fall Year 4’,‘Spring Year 4’];
+const CATEGORIES = ['Philosophy', 'Game Development', 'Gen Ed'];
+const CAT_COLORS = { 'Philosophy': '#a78bfa', 'Game Development': '#4ade80', 'Gen Ed': '#38bdf8' };
+const CAT_BG = { 'Philosophy': '#a78bfa18', 'Game Development': '#4ade8018', 'Gen Ed': '#38bdf818' };
+const SEMESTERS = ['Fall Year 1','Spring Year 1','Fall Year 2','Spring Year 2','Fall Year 3','Spring Year 3','Fall Year 4','Spring Year 4'];
 
 function genId() { return Math.random().toString(36).slice(2, 9); }
-function emptyForm() { return { name: ‘’, code: ‘’, units: 3, semester: ‘Pool’, categories: [], prerequisiteIds: [], notes: ‘’ }; }
+function emptyForm() { return { name: '', code: '', units: 3, semester: 'Pool', categories: [], prerequisiteIds: [], notes: '' }; }
 
 function CourseCard({ course, expanded, setExpanded, hoveredPrereq, setHoveredPrereq, onEdit, onDelete, getCourse, usedBy, dragId, onDragStart, onDragEnd }) {
 const isExpanded = expanded === course.id;
@@ -127,36 +127,36 @@ return (
 draggable
 onDragStart={e => onDragStart(e, course.id)}
 onDragEnd={onDragEnd}
-className={‘card’ + (isDragging ? ’ dragging’ : ‘’) + (isHl ? ’ prereq-hl’ : ‘’)}
+className={'card' + (isDragging ? ' dragging' : '') + (isHl ? ' prereq-hl' : '')}
 onClick={() => setExpanded(isExpanded ? null : course.id)}
 >
-<div style={{ display: ‘flex’, justifyContent: ‘space-between’, alignItems: ‘flex-start’, gap: 8 }}>
+<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 8 }}>
 <div style={{ flex: 1, minWidth: 0 }}>
-{course.code && <div style={{ fontSize: 10, color: ‘#bbb’, marginBottom: 2, fontFamily: ‘Epilogue, sans-serif’, letterSpacing: ‘0.04em’ }}>{course.code}</div>}
-<div style={{ fontSize: 13, fontWeight: 500, lineHeight: 1.35, color: ‘#1a1a1a’, fontFamily: ‘Epilogue, sans-serif’ }}>{course.name}</div>
+{course.code && <div style={{ fontSize: 10, color: '#bbb', marginBottom: 2, fontFamily: 'Epilogue, sans-serif', letterSpacing: '0.04em' }}>{course.code}</div>}
+<div style={{ fontSize: 13, fontWeight: 500, lineHeight: 1.35, color: '#1a1a1a', fontFamily: 'Epilogue, sans-serif' }}>{course.name}</div>
 </div>
 <span className="upill">{course.units}u</span>
 </div>
 {course.categories.length > 0 && (
-<div style={{ marginTop: 8, display: ‘flex’, flexWrap: ‘wrap’, gap: 4 }}>
+<div style={{ marginTop: 8, display: 'flex', flexWrap: 'wrap', gap: 4 }}>
 {course.categories.map(cat => (
-<span key={cat} className=“tag” style={{ background: CAT_BG[cat], color: CAT_COLORS[cat] }}>{cat}</span>
+<span key={cat} className="tag" style={{ background: CAT_BG[cat], color: CAT_COLORS[cat] }}>{cat}</span>
 ))}
 </div>
 )}
 {isExpanded && (
-<div className=“expand” onClick={e => e.stopPropagation()}>
+<div className="expand" onClick={e => e.stopPropagation()}>
 {course.prerequisiteIds.length > 0 && (
 <div style={{ marginBottom: 10 }}>
-<div style={{ fontSize: 10, color: ‘#ccc’, marginBottom: 6, letterSpacing: ‘0.06em’, textTransform: ‘uppercase’, fontFamily: ‘Epilogue, sans-serif’ }}>needs</div>
+<div style={{ fontSize: 10, color: '#ccc', marginBottom: 6, letterSpacing: '0.06em', textTransform: 'uppercase', fontFamily: 'Epilogue, sans-serif' }}>needs</div>
 {course.prerequisiteIds.map(pid => {
 const pc = getCourse(pid);
 return pc ? (
-<div key={pid} style={{ display: ‘flex’, alignItems: ‘center’, gap: 6, marginBottom: 4, fontSize: 12, fontFamily: ‘Epilogue, sans-serif’, cursor: ‘default’ }}
+<div key={pid} style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4, fontSize: 12, fontFamily: 'Epilogue, sans-serif', cursor: 'default' }}
 onMouseEnter={() => setHoveredPrereq(pid)} onMouseLeave={() => setHoveredPrereq(null)}>
-<span style={{ color: ‘#f59e0b’, fontSize: 11 }}>→</span>
-<span style={{ color: ‘#555’ }}>{pc.code || pc.name}</span>
-{pc.code && <span style={{ color: ‘#bbb’ }}>{pc.name}</span>}
+<span style={{ color: '#f59e0b', fontSize: 11 }}>→</span>
+<span style={{ color: '#555' }}>{pc.code || pc.name}</span>
+{pc.code && <span style={{ color: '#bbb' }}>{pc.name}</span>}
 </div>
 ) : null;
 })}
@@ -164,19 +164,19 @@ onMouseEnter={() => setHoveredPrereq(pid)} onMouseLeave={() => setHoveredPrereq(
 )}
 {prereqsOf.length > 0 && (
 <div style={{ marginBottom: 10 }}>
-<div style={{ fontSize: 10, color: ‘#ccc’, marginBottom: 6, letterSpacing: ‘0.06em’, textTransform: ‘uppercase’, fontFamily: ‘Epilogue, sans-serif’ }}>unlocks</div>
+<div style={{ fontSize: 10, color: '#ccc', marginBottom: 6, letterSpacing: '0.06em', textTransform: 'uppercase', fontFamily: 'Epilogue, sans-serif' }}>unlocks</div>
 {prereqsOf.map(rc => (
-<div key={rc.id} style={{ display: ‘flex’, alignItems: ‘center’, gap: 6, marginBottom: 4, fontSize: 12, fontFamily: ‘Epilogue, sans-serif’ }}>
-<span style={{ color: ‘#60a5fa’, fontSize: 11 }}>→</span>
-<span style={{ color: ‘#555’ }}>{rc.code || rc.name}</span>
+<div key={rc.id} style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4, fontSize: 12, fontFamily: 'Epilogue, sans-serif' }}>
+<span style={{ color: '#60a5fa', fontSize: 11 }}>→</span>
+<span style={{ color: '#555' }}>{rc.code || rc.name}</span>
 </div>
 ))}
 </div>
 )}
-{course.notes && <div style={{ marginBottom: 10, fontSize: 12, color: ‘#999’, lineHeight: 1.5, fontFamily: ‘Epilogue, sans-serif’ }}>{course.notes}</div>}
-<div style={{ display: ‘flex’, gap: 6, marginTop: 8 }}>
-<button className=“btn sm” style={{ flex: 1 }} onClick={() => onEdit(course)}>edit</button>
-<button className=“btn sm danger” style={{ flex: 1 }} onClick={() => onDelete(course.id)}>delete</button>
+{course.notes && <div style={{ marginBottom: 10, fontSize: 12, color: '#999', lineHeight: 1.5, fontFamily: 'Epilogue, sans-serif' }}>{course.notes}</div>}
+<div style={{ display: 'flex', gap: 6, marginTop: 8 }}>
+<button className="btn sm" style={{ flex: 1 }} onClick={() => onEdit(course)}>edit</button>
+<button className="btn sm danger" style={{ flex: 1 }} onClick={() => onDelete(course.id)}>delete</button>
 </div>
 </div>
 )}
@@ -186,24 +186,24 @@ onMouseEnter={() => setHoveredPrereq(pid)} onMouseLeave={() => setHoveredPrereq(
 
 function App() {
 const [courses, setCourses] = useState(() => {
-try { const s = localStorage.getItem(‘course-planner-courses’); return s ? JSON.parse(s) : []; }
+try { const s = localStorage.getItem('course-planner-courses'); return s ? JSON.parse(s) : []; }
 catch { return []; }
 });
 useEffect(() => {
-try { localStorage.setItem(‘course-planner-courses’, JSON.stringify(courses)); } catch {}
+try { localStorage.setItem('course-planner-courses', JSON.stringify(courses)); } catch {}
 }, [courses]);
 
 const [modal, setModal] = useState(null);
 const [editId, setEditId] = useState(null);
 const [expanded, setExpanded] = useState(null);
 const [hoveredPrereq, setHoveredPrereq] = useState(null);
-const [prereqSearch, setPrereqSearch] = useState(’’);
+const [prereqSearch, setPrereqSearch] = useState('');
 const [dragId, setDragId] = useState(null);
 const [dragOver, setDragOver] = useState(null);
 const [form, setForm] = useState(emptyForm());
 
-function openAdd() { setForm(emptyForm()); setEditId(null); setModal(‘add’); setPrereqSearch(’’); }
-function openEdit(course) { setForm({…course}); setEditId(course.id); setModal(‘edit’); setPrereqSearch(’’); }
+function openAdd() { setForm(emptyForm()); setEditId(null); setModal('add'); setPrereqSearch(''); }
+function openEdit(course) { setForm({…course}); setEditId(course.id); setModal('edit'); setPrereqSearch(''); }
 function save() {
 if (!form.name.trim()) return;
 if (editId) { setCourses(cs => cs.map(c => c.id === editId ? {…form, id: editId} : c)); }
@@ -218,8 +218,8 @@ function toggleCat(cat) { setForm(f => ({…f, categories: f.categories.includes
 function togglePrereq(id) { setForm(f => ({…f, prerequisiteIds: f.prerequisiteIds.includes(id) ? f.prerequisiteIds.filter(p => p !== id) : […f.prerequisiteIds, id]})); }
 function getCourse(id) { return courses.find(c => c.id === id); }
 function usedBy(id) { return courses.filter(c => c.prerequisiteIds.includes(id)); }
-function onDragStart(e, id) { setDragId(id); e.dataTransfer.effectAllowed = ‘move’; }
-function onDragOver(e, sem) { e.preventDefault(); e.dataTransfer.dropEffect = ‘move’; setDragOver(sem); }
+function onDragStart(e, id) { setDragId(id); e.dataTransfer.effectAllowed = 'move'; }
+function onDragOver(e, sem) { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; setDragOver(sem); }
 function onDrop(e, sem) { e.preventDefault(); if (dragId) { setCourses(cs => cs.map(c => c.id === dragId ? {…c, semester: sem} : c)); } setDragId(null); setDragOver(null); }
 function onDragEnd() { setDragId(null); setDragOver(null); }
 
@@ -230,20 +230,20 @@ const prereqOptions = courses.filter(c => c.id !== editId && !form.prerequisiteI
 const cardProps = { expanded, setExpanded, hoveredPrereq, setHoveredPrereq, onEdit: openEdit, onDelete: remove, getCourse, usedBy, dragId, onDragStart, onDragEnd };
 
 return (
-<div style={{ minHeight: ‘100vh’ }}>
+<div style={{ minHeight: '100vh' }}>
 {/* Top bar */}
 <div className="topbar">
 <div>
-<div style={{ fontFamily: ‘Fraunces, serif’, fontSize: 22, fontWeight: 600, letterSpacing: ‘-0.01em’ }}>course planner</div>
-<div style={{ fontSize: 11, color: ‘#bbb’, marginTop: 2, fontFamily: ‘Epilogue, sans-serif’ }}>
+<div style={{ fontFamily: 'Fraunces, serif', fontSize: 22, fontWeight: 600, letterSpacing: '-0.01em' }}>course planner</div>
+<div style={{ fontSize: 11, color: '#bbb', marginTop: 2, fontFamily: 'Epilogue, sans-serif' }}>
 {courses.length} courses · {courses.reduce((s,c) => s + Number(c.units), 0)} units total
 </div>
 </div>
-<div style={{ display: ‘flex’, gap: 16, alignItems: ‘center’ }}>
-<div style={{ display: ‘flex’, gap: 12 }}>
+<div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+<div style={{ display: 'flex', gap: 12 }}>
 {CATEGORIES.map(cat => (
-<div key={cat} style={{ display: ‘flex’, alignItems: ‘center’, gap: 5, fontSize: 11, color: ‘#aaa’, fontFamily: ‘Epilogue, sans-serif’ }}>
-<div style={{ width: 7, height: 7, borderRadius: ‘50%’, background: CAT_COLORS[cat] }} />
+<div key={cat} style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 11, color: '#aaa', fontFamily: 'Epilogue, sans-serif' }}>
+<div style={{ width: 7, height: 7, borderRadius: '50%', background: CAT_COLORS[cat] }} />
 {cat}
 </div>
 ))}
@@ -386,7 +386,7 @@ return (
 );
 }
 
-ReactDOM.createRoot(document.getElementById(‘root’)).render(<App />);
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
 </script>
 
 </body>
